@@ -5,7 +5,7 @@ import torchvision.transforms as ttr
 import matplotlib.pyplot as plt
 
 
-device = 'cpu'
+device = 'cuda'
 
 training_data = tds.FashionMNIST(
   root='../data/torch',
@@ -21,19 +21,6 @@ test_data = tds.FashionMNIST(
 
 train_dataloader = tud.DataLoader(training_data, batch_size=64)
 test_dataloader = tud.DataLoader(test_data, batch_size=64)
-
-
-def downloading():
-  tds.FashionMNIST(
-    root='data',
-    train=True,
-    download=True,
-    transform=ttr.ToTensor())
-  tds.FashionMNIST(
-    root='data',
-    train=False,
-    download=True,
-    transform=ttr.ToTensor())
 
 
 def mapping():
