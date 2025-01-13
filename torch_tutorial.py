@@ -5,7 +5,7 @@ import torchvision.transforms as ttr
 import matplotlib.pyplot as plt
 
 
-device = 'cuda'
+device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 training_data = tds.FashionMNIST(
   root='../data/torch',
@@ -19,7 +19,7 @@ test_data = tds.FashionMNIST(
   download=False,
   transform=ttr.ToTensor())
 
-train_dataloader = tud.DataLoader(training_data, batch_size=64)
+training_dataloader = tud.DataLoader(training_data, batch_size=64)
 test_dataloader = tud.DataLoader(test_data, batch_size=64)
 
 
@@ -117,10 +117,10 @@ def run():
 
   epochs = 5
   for t in range(epochs):
-    print(f"Epoch {t+1}\n-------------------------------")
-    train(train_dataloader, model, loss_fn, optimizer)
+    print(f'Epoch {t+1}\n-------------------------------')
+    train(training_dataloader, model, loss_fn, optimizer)
     test(test_dataloader, model, loss_fn)
-  print("Done!")
+  print('Done!')
 
 
-if __name__ == '__main__': run()
+# if __name__ == '__main__': run()
