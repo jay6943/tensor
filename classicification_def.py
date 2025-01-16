@@ -25,7 +25,7 @@ def training():
   loss_function = torch.nn.BCELoss()
   optimizer = torch.optim.SGD(model.parameters(), lr=1e-1)
 
-  epochs = 5001
+  epochs = 51
   loss_data = np.zeros(epochs)
   accuracy_data = np.zeros(epochs)
   for epoch in range(epochs):
@@ -35,10 +35,8 @@ def training():
     loss_data[epoch] = loss.item()
 
     prediction = outputs > 0.5
-    # correct = (prediction.float() == y_train)
-    # accuracy = correct.sum().item() / len(correct)
-    correct = np.where(prediction.float() == y_train)
-    accuracy = len(correct[0]) / len(outputs)
+    correct = (prediction.float() == y_train)
+    accuracy = correct.sum().item() / len(correct)
 
     accuracy_data[epoch] = accuracy
 
@@ -46,7 +44,7 @@ def training():
     loss.backward()
     optimizer.step()
 
-    if epoch % 500 == 0:
+    if epoch % 5 == 0:
       print(f'{epoch:>5d}, {loss.item():10.3f}, {accuracy:10.3f}')
 
   np.savetxt(cfg.workspace + 'diabetes_loss.txt', loss_data)
