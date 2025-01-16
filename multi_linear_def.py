@@ -11,18 +11,14 @@ class NeuralNetwork(torch.nn.Module):
     )
 
   def forward(self, x):
-    logits = self.linear_relu_stack(x)
-    return logits
+    return self.linear_relu_stack(x)
 
 
 def training():
-  data = np.loadtxt(cfg.workspace + 'a20.csv', delimiter=',')
+  data = np.loadtxt(cfg.workspace + 'multi_linear.csv', delimiter=',')
 
-  x_train_data = data[:, :-1]
-  y_train_data = data[:, [-1]]
-
-  x_train = torch.Tensor(x_train_data)
-  y_train = torch.Tensor(y_train_data)
+  x_train = torch.Tensor(data[:, :-1])
+  y_train = torch.Tensor(data[:, [-1]])
 
   model = NeuralNetwork()
   loss_function = torch.nn.MSELoss()
@@ -47,7 +43,7 @@ def training():
     for parameter in child.parameters():
       print(name, parameter)
 
-  np.savetxt(cfg.workspace + 'a20.txt', loss_data)
-  torch.save(model.state_dict(), cfg.workspace + 'a20.pt')
+  np.savetxt(cfg.workspace + 'multi_linear.txt', loss_data)
+  torch.save(model.state_dict(), cfg.workspace + 'multi_linear_model.pt')
 
 if __name__ == '__main__': training()

@@ -1,22 +1,23 @@
 import cfg
-import a20
 import torch
 import numpy as np
+import multi_linear_def
 import matplotlib.pyplot as plt
 
 
 def ploting():
-  data = np.loadtxt(cfg.workspace + 'a20.txt')
+  data = np.loadtxt(cfg.workspace + 'multi_linear.txt')
 
   plt.figure(figsize=(12, 6))
   plt.plot(data)
   plt.grid()
   plt.show()
 
-def testing():
-  filename = cfg.workspace + 'a20.pt'
 
-  model = a20.NeuralNetwork()
+def testing():
+  filename = cfg.workspace + 'multi_linear.pt'
+
+  model = multi_linear_def.NeuralNetwork()
   model.load_state_dict(torch.load(filename, weights_only=True))
   model.eval()
 

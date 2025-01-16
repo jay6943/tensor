@@ -1,10 +1,10 @@
 import cfg
-import a10
 import torch
+import linear_def
 
-filename = cfg.workspace + 'a10.pt'
+filename = cfg.workspace + 'linear.pt'
 
-model = a10.NeuralNetwork()
+model = linear_def.NeuralNetwork()
 model.load_state_dict(torch.load(filename, weights_only=True))
 model.eval()
 

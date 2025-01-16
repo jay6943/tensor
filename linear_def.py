@@ -9,8 +9,7 @@ class NeuralNetwork(torch.nn.Module):
     )
 
   def forward(self, x):
-    logits = self.linear_relu_stack(x)
-    return logits
+    return self.linear_relu_stack(x)
 
 
 def training():
@@ -32,6 +31,6 @@ def training():
     if epoch % 100 == 0:
       print(f'{epoch:>5d}, {loss.item():10.2e}')
 
-  torch.save(model.state_dict(), cfg.workspace + 'a10.pt')
+  torch.save(model.state_dict(), cfg.workspace + 'linear_model.pt')
 
 if __name__ == '__main__': training()
