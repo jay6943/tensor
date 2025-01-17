@@ -1,5 +1,6 @@
 import cfg
 import torch
+import numpy as np
 
 
 class NeuralNetwork(torch.nn.Module):
@@ -21,9 +22,13 @@ def training():
   loss_function = torch.nn.MSELoss()
   optimizer = torch.optim.SGD(model.parameters(), lr=1e-2)
 
-  for epoch in range(2001):
+  epochs = 2001
+  loss_data = np.zeros(epochs)
+  for epoch in range(epochs):
     prediction = model(x_train)
     loss = loss_function(prediction, y_train)
+
+    loss_data[epoch] = loss.item()
 
     optimizer.zero_grad()
     loss.backward()
@@ -32,6 +37,7 @@ def training():
     if epoch % 100 == 0:
       print(f'{epoch:>5d}, {loss.item():10.2e}')
 
+  np.savetxt(cfg.works + 'linear.txt', loss_data)
   torch.save(model.state_dict(), cfg.works + 'linear_model.pt')
 
 
