@@ -1,1 +1,1 @@
-workspace = '../data/torch/'
+works = '../data/torch/'

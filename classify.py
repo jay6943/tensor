@@ -16,7 +16,7 @@ class LogisticRegression(torch.nn.Module):
 
 
 def training():
-  data = np.loadtxt(cfg.workspace + 'diabetes.csv', delimiter=',', skiprows=1)
+  data = np.loadtxt(cfg.works + 'diabetes.csv', delimiter=',', skiprows=1)
 
   x_train = torch.Tensor(data[:, :-1])
   y_train = torch.Tensor(data[:, [-1]])
@@ -25,7 +25,7 @@ def training():
   loss_function = torch.nn.BCELoss()
   optimizer = torch.optim.SGD(model.parameters(), lr=1e-1)
 
-  epochs = 51
+  epochs = 5001
   loss_data = np.zeros(epochs)
   accuracy_data = np.zeros(epochs)
   for epoch in range(epochs):
@@ -36,6 +36,7 @@ def training():
 
     prediction = outputs > 0.5
     correct = (prediction.float() == y_train)
+    correct = correct[:].float()
     accuracy = correct.sum().item() / len(correct)
 
     accuracy_data[epoch] = accuracy
@@ -44,13 +45,16 @@ def training():
     loss.backward()
     optimizer.step()
 
-    if epoch % 5 == 0:
+    if epoch % 500 == 0:
       print(f'{epoch:>5d}, {loss.item():10.3f}, {accuracy:10.3f}')
+      print(prediction[:10].float().T)
+      print(y_train[:10].T)
+      print(correct[:10].float().T)
 
-  np.savetxt(cfg.workspace + 'diabetes_loss.txt', loss_data)
-  np.savetxt(cfg.workspace + 'diabetes_accuracy.txt', accuracy_data)
+  np.savetxt(cfg.works + 'diabetes_loss.txt', loss_data)
+  np.savetxt(cfg.works + 'diabetes_accuracy.txt', accuracy_data)
 
-  torch.save(model.state_dict(), cfg.workspace + 'diabetes_model.pt')
+  torch.save(model.state_dict(), cfg.works + 'diabetes_model.pt')
 
 
 if __name__ == '__main__': training()
