@@ -7,18 +7,23 @@ class NeuralNetwork(torch.nn.Module):
   def __init__(self):
     super().__init__()
     self.linear_relu_stack = torch.nn.Sequential(
-      torch.nn.Linear(3, 1)
-    )
+      # torch.nn.Linear(4, 4))
+      torch.nn.Linear(4, 64),
+      torch.nn.ReLU(),
+      torch.nn.Linear(64, 64),
+      torch.nn.ReLU(),
+      torch.nn.Linear(64, 4))
 
   def forward(self, x):
     return self.linear_relu_stack(x)
 
 
 def training():
-  data = np.loadtxt(cfg.works + 'multi_linear.csv', delimiter=',')
+  x_data = np.loadtxt(cfg.works + 'icr/1108-164402.txt')
+  y_data = np.loadtxt(cfg.works + 'icr/1108-164402_bits.txt')
 
-  x_train = torch.Tensor(data[:, :-1])
-  y_train = torch.Tensor(data[:, [-1]])
+  x_train = torch.Tensor(x_data)
+  y_train = torch.Tensor(y_data)
 
   model = NeuralNetwork()
   loss_function = torch.nn.MSELoss()
@@ -43,8 +48,8 @@ def training():
     for parameter in child.parameters():
       print(name, parameter)
 
-  np.savetxt(cfg.works + 'multi_linear.txt', loss_data)
-  torch.save(model.state_dict(), cfg.works + 'multi_linear_model.pt')
+  np.savetxt(cfg.works + 'icr/loss.txt', loss_data)
+  torch.save(model.state_dict(), cfg.works + 'icr/model.pt')
 
 
 if __name__ == '__main__': training()

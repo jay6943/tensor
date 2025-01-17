@@ -37,7 +37,7 @@ def training():
     prediction = outputs > 0.5
     correct = (prediction.float() == y_train)
     correct = correct[:].float()
-    accuracy = correct.sum().item() / len(correct)
+    accuracy = correct.sum() / len(correct)
 
     accuracy_data[epoch] = accuracy
 
@@ -47,6 +47,7 @@ def training():
 
     if epoch % 500 == 0:
       print(f'{epoch:>5d}, {loss.item():10.3f}, {accuracy:10.3f}')
+
       print(prediction[:10].float().T)
       print(y_train[:10].T)
       print(correct[:10].float().T)
