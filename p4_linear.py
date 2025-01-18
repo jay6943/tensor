@@ -33,7 +33,7 @@ def training():
     optimizer.step()
 
     if epoch % 100 == 0:
-      print(f'{epoch:>5d}, {loss.item():10.2e}')
+      print(f'i = {epoch:>4d}, loss = {loss.item():10.2e}')
 
   np.savetxt(cfg.works + 'linear.txt', loss_data)
   torch.save(model.state_dict(), cfg.works + 'linear_model.pt')

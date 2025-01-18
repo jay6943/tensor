@@ -23,7 +23,7 @@ def training():
 
   model = LogisticRegression()
   loss_function = torch.nn.BCELoss()
-  optimizer = torch.optim.SGD(model.parameters(), lr=1e-5)
+  optimizer = torch.optim.SGD(model.parameters(), lr=1e-4)
 
   epochs = 5001
   loss_data = np.zeros(epochs)
@@ -34,9 +34,8 @@ def training():
 
     loss_data[epoch] = loss.item()
 
-    prediction = outputs > 0.5
-    correct = (prediction.float() == y_train)
-    correct = correct[:].float()
+    prediction = (outputs > 0.5).float()
+    correct = (prediction == y_train)[:].float()
     accuracy = correct.sum() / len(correct)
 
     accuracy_data[epoch] = accuracy
@@ -46,7 +45,9 @@ def training():
     optimizer.step()
 
     if epoch % 500 == 0:
-      print(f'{epoch:>5d}, {loss.item():10.3f}, {accuracy:10.3f}')
+      print(f'i = {epoch:>4d}', end=', ')
+      print(f'loss = {loss.item():>7.3f}', end=', ')
+      print(f'accuracy = {accuracy:>7.3f}')
 
   np.savetxt(cfg.works + 'diabetes_loss.txt', loss_data)
   np.savetxt(cfg.works + 'diabetes_accuracy.txt', accuracy_data)

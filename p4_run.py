@@ -1,6 +1,6 @@
 import cfg
 import torch
-import linearR
+import p4_linear
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 def testing():
   model_file = cfg.works + 'linear_model.pt'
 
-  model = linearR.NeuralNetwork()
+  model = p4_linear.NeuralNetwork()
   model.load_state_dict(torch.load(model_file, weights_only=True))
   model.eval()
 
