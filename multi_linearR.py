@@ -15,7 +15,7 @@ class NeuralNetwork(torch.nn.Module):
 
 
 def training():
-  data = [
+  data = torch.Tensor([
     [1, 2, 0, -4],
     [5, 4, 3, 4],
     [1, 2, -1, -6],
@@ -31,8 +31,7 @@ def training():
     [1, 1, 3, 5],
     [0, 1, 4, 5],
     [2, 3, 3, 1],
-  ]
-  data = torch.Tensor(data)
+  ])
 
   x_train = torch.Tensor(data[:, :-1])
   y_train = torch.Tensor(data[:, [-1]])
