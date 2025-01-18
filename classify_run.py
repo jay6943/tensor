@@ -4,19 +4,17 @@ import matplotlib.pyplot as plt
 
 
 def ploting():
-  data = {
-    '1': np.loadtxt(cfg.works + 'diabetes_loss.txt'),
-    '2': np.loadtxt(cfg.works + 'diabetes_accuracy.txt')
-  }
-  title = {'1': 'Loss', '2': 'Accuracy'}
+  data = [np.loadtxt(cfg.works + 'diabetes_loss.txt'),
+          np.loadtxt(cfg.works + 'diabetes_accuracy.txt')]
+  text = ['Loss', 'Accuracy']
 
   plt.figure(figsize=(12, 6))
-  for i in [1, 2]:
-    plt.subplot(1, 2, i)
-    plt.plot(data[str(i)])
+  for i, title in enumerate(text):
+    plt.subplot(1, 2, i+1)
+    plt.plot(data[i])
     plt.xlabel('Epoch')
-    plt.ylabel(title[str(i)])
-    plt.xlim(0, len(data[str(i)]))
+    plt.ylabel(title)
+    plt.xlim(0, len(data[i]))
     plt.grid()
   plt.show()
 
