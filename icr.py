@@ -19,10 +19,10 @@ class NeuralNetwork(torch.nn.Module):
 
 
 def training():
-  x_data = np.loadtxt(cfg.works + 'icr/1108-164402.txt')
+  x_data = np.load(cfg.works + 'icr/1108-164402.npy')
   y_data = np.loadtxt(cfg.works + 'icr/1108-164402_bits.txt')
 
-  x_train = torch.Tensor(x_data)
+  x_train = torch.Tensor(x_data[:, 40002:])
   y_train = torch.Tensor(y_data)
 
   model = NeuralNetwork()

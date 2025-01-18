@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 
 def testing():
-  model_file = cfg.works + 'multi_linear.pt'
+  model_file = cfg.works + 'multi_linear_model.pt'
 
   model = multi_linearR.NeuralNetwork()
   model.load_state_dict(torch.load(model_file, weights_only=True))
