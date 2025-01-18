@@ -6,13 +6,7 @@ import numpy as np
 class NeuralNetwork(torch.nn.Module):
   def __init__(self):
     super().__init__()
-    self.linear_relu_stack = torch.nn.Sequential(
-      # torch.nn.Linear(4, 4))
-      torch.nn.Linear(4, 64),
-      torch.nn.ReLU(),
-      torch.nn.Linear(64, 64),
-      torch.nn.ReLU(),
-      torch.nn.Linear(64, 4))
+    self.linear_relu_stack = torch.nn.Sequential(torch.nn.Linear(4, 4))
 
   def forward(self, x):
     return self.linear_relu_stack(x)
