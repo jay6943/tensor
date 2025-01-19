@@ -1,6 +1,7 @@
 import cfg
 import torch
 import numpy as np
+import torch.nn.functional as tnf
 
 
 class LogisticRegression(torch.nn.Module):
@@ -20,10 +21,11 @@ def training():
 
   x_train = torch.Tensor(data[:, :-1])
   y_train = torch.Tensor(data[:, [-1]])
+  x_train = tnf.normalize(x_train)
 
   model = LogisticRegression()
   loss_function = torch.nn.BCELoss()
-  optimizer = torch.optim.SGD(model.parameters(), lr=1e-4)
+  optimizer = torch.optim.SGD(model.parameters(), lr=1e-3)
 
   epochs = 5001
   loss_data = np.zeros(epochs)
