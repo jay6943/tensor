@@ -5,7 +5,6 @@ import torchvision.transforms as ttr
 def number_MIST():
   tds.MNIST(
     root='../data/torch',
-    train=True,
     download=True,
     transform=ttr.ToTensor()
   )
@@ -20,7 +19,6 @@ def number_MIST():
 def fashion_MNIST():
   tds.FashionMNIST(
     root='../data/torch',
-    train=True,
     download=True,
     transform=ttr.ToTensor()
   )

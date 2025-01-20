@@ -2,6 +2,15 @@ import torch
 import torch.utils.data as tud
 
 
+class NeuralNetwork(torch.nn.Module):
+  def __init__(self):
+    super().__init__()
+    self.linear_relu_stack = torch.nn.Sequential(torch.nn.Linear(1, 1))
+
+  def forward(self, x):
+    return self.linear_relu_stack(x)
+
+
 class DataSetting(tud.Dataset):
   def __init__(self, x_train, y_train):
     self.x_train = x_train
@@ -12,15 +21,6 @@ class DataSetting(tud.Dataset):
 
   def __len__(self):
     return self.x_train.shape[0]
-
-
-class NeuralNetwork(torch.nn.Module):
-  def __init__(self):
-    super().__init__()
-    self.linear_relu_stack = torch.nn.Sequential(torch.nn.Linear(1, 1))
-
-  def forward(self, x):
-    return self.linear_relu_stack(x)
 
 
 def training():

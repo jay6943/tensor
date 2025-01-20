@@ -14,10 +14,9 @@ def testing():
   model.eval()
 
   x_data = np.load(cfg.works + 'icr/1108-164402.npy')
-  x_data = x_data[:, :40002].T
-  print(x_data.shape)
+  x_data = x_data.transpose()
 
-  x_test = torch.Tensor(x_data)
+  x_test = torch.Tensor(x_data[:40002, :])
   y_test = model(x_test).detach().numpy()
 
   return y_test
@@ -34,11 +33,11 @@ def ploting():
 
 def constellation(fp, data):
   lch = np.max(data)
-  plt.figure(figsize=(6 * cfg.NPol, 6))
-  for i in range(cfg.NPol):
+  plt.figure(figsize=(6 * 2, 6))
+  for i in range(2):
     x = data[2 * i]
     y = data[2 * i + 1]
-    plt.subplot(1, cfg.NPol, i+1)
+    plt.subplot(1, 2, i+1)
     plt.hist2d(x, y, bins=500, norm=cls.LogNorm(), cmap='jet')
     plt.gca().set_aspect('equal')
     plt.xlim(-lch, lch)

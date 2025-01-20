@@ -19,4 +19,16 @@ def ploting():
   plt.show()
 
 
-if __name__ == '__main__': ploting()
+def loss():
+  data = np.loadtxt(cfg.works + 'diabetes_loss.txt')
+
+  plt.figure(figsize=(12, 6))
+  plt.plot(data)
+  plt.xlabel('Epoch')
+  plt.ylabel('Loss')
+  plt.xlim(0, len(data))
+  plt.grid()
+  plt.show()
+
+
+if __name__ == '__main__': loss()

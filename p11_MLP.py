@@ -99,15 +99,12 @@ def model_test(dataloader, model, loss_function):
 def training():
   train_data = tvs.datasets.MNIST(
     root='../data/torch',
-    train=True,
-    download=False,
     transform=tvs.transforms.ToTensor()
   )
 
   test_data = tvs.datasets.MNIST(
     root='../data/torch',
     train=False,
-    download=False,
     transform=tvs.transforms.ToTensor()
   )
 
