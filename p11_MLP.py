@@ -87,7 +87,7 @@ def model_test(dataloader, model, loss_function):
       loss = loss_function(outputs, y_test)
 
       test_loss_sum += loss.item()
-      test_total += y_test.size(0)
+      test_total += y_test.size(0)  # batch size = 32
       test_correct += (torch.argmax(outputs, 1) == y_test).sum().item()
 
     test_avg_loss = test_loss_sum / total_test_batch
@@ -101,7 +101,6 @@ def training():
     root='../data/torch',
     transform=tvs.transforms.ToTensor()
   )
-
   test_data = tvs.datasets.MNIST(
     root='../data/torch',
     train=False,
