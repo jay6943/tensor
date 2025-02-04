@@ -2,7 +2,7 @@ import torch
 import torch.utils.data as tud
 
 
-class NeuralNetwork(torch.nn.Module):
+class Neural_Network(torch.nn.Module):
   def __init__(self):
     super().__init__()
     self.linear_relu_stack = torch.nn.Sequential(torch.nn.Linear(1, 1))
@@ -30,7 +30,7 @@ def training():
   dataset = DataSetting(x_train, y_train)
   train_data = tud.DataLoader(dataset=dataset, batch_size=3, shuffle=True)
 
-  model = NeuralNetwork()
+  model = Neural_Network()
   loss_function = torch.nn.MSELoss()
   optimizer = torch.optim.SGD(model.parameters(), lr=1e-2)
 

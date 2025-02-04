@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import matplotlib.colors as cls
 
 
-class NeuralNetwork(torch.nn.Module):
+class Neural_Network(torch.nn.Module):
   def __init__(self):
     super().__init__()
     self.f1 = torch.nn.Linear(4, 32)
@@ -43,7 +43,7 @@ def training():
   dataset = DataSetting(x_train, y_train)
   train_data = tud.DataLoader(dataset=dataset, batch_size=32, shuffle=True)
 
-  model = NeuralNetwork()
+  model = Neural_Network()
   loss_function = torch.nn.MSELoss()
   optimizer = torch.optim.SGD(model.parameters(), lr=0.01)
 
@@ -73,7 +73,7 @@ def training():
 def testing():
   model_file = cfg.works + 'icr/model.pt'
 
-  model = NeuralNetwork()
+  model = Neural_Network()
   model.load_state_dict(torch.load(model_file, weights_only=True))
   model.eval()
 

@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-class DeepLearning(torch.nn.Module):
+class Deep_Learning(torch.nn.Module):
   def __init__(self):
     super().__init__()
     self.deeplearning_stack = torch.nn.Sequential(
@@ -21,7 +21,7 @@ def training():
   x_train = torch.Tensor([2, 4, 5, 8, 10, 12, 14, 16, 18, 20]).view(10, 1)
   y_train = torch.Tensor([0, 0, 0, 0, 0, 0, 1, 1, 1, 1]).view(10, 1)
 
-  model = DeepLearning()
+  model = Deep_Learning()
   loss_function = torch.nn.BCELoss()
   optimizer = torch.optim.SGD(model.parameters(), lr=1e-1)
 
@@ -47,7 +47,7 @@ def training():
 def testing():
   model_file = cfg.works + 'deep_learning_model.pt'
 
-  model = DeepLearning()
+  model = Deep_Learning()
   model.load_state_dict(torch.load(model_file, weights_only=True))
   model.eval()
 

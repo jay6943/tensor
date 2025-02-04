@@ -3,7 +3,7 @@ import torchvision as tvs
 import torch.utils.data as tud
 
 
-class DeepLearning(torch.nn.Module):
+class Deep_Learning(torch.nn.Module):
   def __init__(self):
     super().__init__()
     self.flatten = torch.nn.Flatten()
@@ -112,7 +112,7 @@ def training():
   valid_batch = tud.DataLoader(dataset=valid_data, batch_size=32, shuffle=True)
   test_batch = tud.DataLoader(dataset=test_data, batch_size=32, shuffle=True)
 
-  model = DeepLearning()
+  model = Deep_Learning()
   loss_function = torch.nn.CrossEntropyLoss()
   optimizer = torch.optim.SGD(model.parameters(), lr=1e-2)
 

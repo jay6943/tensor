@@ -5,7 +5,7 @@ import torch.utils.data as tud
 device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 
 
-class DeepLearning(torch.nn.Module):
+class Deep_Learning(torch.nn.Module):
   def __init__(self):
     super().__init__()
     self.flatten = torch.nn.Flatten()
@@ -114,7 +114,7 @@ def training():
   valid_load = tud.DataLoader(dataset=valid_data, batch_size=32, shuffle=True)
   test_load = tud.DataLoader(dataset=test_data, batch_size=32, shuffle=True)
 
-  model = DeepLearning()
+  model = Deep_Learning()
   if torch.cuda.device_count() > 1:
     print('Use', torch.cuda.device_count())
     model = torch.nn.DataParallel(model)

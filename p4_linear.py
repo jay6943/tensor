@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-class NeuralNetwork(torch.nn.Module):
+class Neural_Network(torch.nn.Module):
   def __init__(self):
     super().__init__()
     self.linear_relu_stack = torch.nn.Sequential(torch.nn.Linear(1, 1))
@@ -17,7 +17,7 @@ def training():
   x_train = torch.Tensor([1, 2, 3, 4, 5, 6]).view(6, 1)
   y_train = torch.Tensor([3, 4, 5, 6, 7, 8]).view(6, 1)
 
-  model = NeuralNetwork()
+  model = Neural_Network()
   loss_function = torch.nn.MSELoss()
   optimizer = torch.optim.SGD(model.parameters(), lr=1e-2)
 
@@ -43,7 +43,7 @@ def training():
 def testing():
   model_file = cfg.works + 'linear_model.pt'
 
-  model = NeuralNetwork()
+  model = Neural_Network()
   model.load_state_dict(torch.load(model_file, weights_only=True))
   model.eval()
 

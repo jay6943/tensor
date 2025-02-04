@@ -6,7 +6,7 @@ import sklearn.model_selection as sms
 import sklearn.metrics as skm
 
 
-class ANeuralNetwork(torch.nn.Module):
+class Artificial_Neural_Network(torch.nn.Module):
   def __init__(self):
     super().__init__()
     self.f1 = torch.nn.Linear(8, 20)
@@ -38,7 +38,7 @@ def training():
   y_test = torch.LongTensor(y_test)
 
   torch.manual_seed(20)
-  model = ANeuralNetwork()
+  model = Artificial_Neural_Network()
   loss_function = torch.nn.CrossEntropyLoss()
   optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
 

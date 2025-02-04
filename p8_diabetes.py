@@ -4,7 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
-class LogisticRegression(torch.nn.Module):
+class Logistic_Regression(torch.nn.Module):
   def __init__(self):
     super().__init__()
     self.logistic_stack = torch.nn.Sequential(
@@ -22,7 +22,7 @@ def training():
   x_train = torch.Tensor(data[:, :-1])
   y_train = torch.Tensor(data[:, [-1]])
 
-  model = LogisticRegression()
+  model = Logistic_Regression()
   loss_function = torch.nn.BCELoss()
   optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
 

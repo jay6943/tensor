@@ -1,7 +1,7 @@
 import torch
 
 
-class ConvolutionNeuralNetwork(torch.nn.Module):
+class Convolution_Neural_Network(torch.nn.Module):
   def __init__(self):
     super().__init__()
     self.f1 = torch.nn.Linear(4, 4)
