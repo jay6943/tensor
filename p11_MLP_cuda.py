@@ -2,6 +2,8 @@ import torch
 import torchvision as tvs
 import torch.utils.data as tud
 
+device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+
 
 class DeepLearning(torch.nn.Module):
   def __init__(self):
@@ -28,8 +30,8 @@ def model_train(dataloader, model, loss_function, optimizer):
   total_train_batch = len(dataloader)
 
   for images, labels in dataloader:
-    x_train = images.view(-1, 28 * 28)
-    y_train = labels
+    x_train = images.view(-1, 28 * 28).to(device)
+    y_train = labels.to(device)
 
     outputs = model(x_train)
     loss = loss_function(outputs, y_train)
@@ -56,8 +58,8 @@ def mode_evaluation(dataloader, model, loss_function):
     total_val_batch = len(dataloader)
 
     for images, labels in dataloader:
-      x_val = images.view(-1, 28 * 28)
-      y_val = labels
+      x_val = images.view(-1, 28 * 28).to(device)
+      y_val = labels.to(device)
 
       outputs = model(x_val)
       loss = loss_function(outputs, y_val)
@@ -80,8 +82,8 @@ def model_test(dataloader, model, loss_function):
     total_test_batch = len(dataloader)
 
     for images, labels in dataloader:
-      x_test = images.view(-1, 28 * 28)
-      y_test = labels
+      x_test = images.view(-1, 28 * 28).to(device)
+      y_test = labels.to(device)
 
       outputs = model(x_test)
       loss = loss_function(outputs, y_test)
@@ -113,6 +115,11 @@ def training():
   test_load = tud.DataLoader(dataset=test_data, batch_size=32, shuffle=True)
 
   model = DeepLearning()
+  if torch.cuda.device_count() > 1:
+    print('Use', torch.cuda.device_count())
+    model = torch.nn.DataParallel(model)
+  model.to(device)
+
   loss_function = torch.nn.CrossEntropyLoss()
   optimizer = torch.optim.SGD(model.parameters(), lr=1e-2)
 

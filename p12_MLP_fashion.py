@@ -125,15 +125,15 @@ def training():
     loss, accuracy = model_train(train_batch, model, loss_function, optimizer)
     train_loss.append(loss)
     train_accuracy.append(accuracy)
-    print(f'{epoch}, {loss:%.6f}, {accuracy}', end=', ')
+    print(f'[{epoch+1:2d}], {loss:.3f}, {accuracy:.2f}', end=', ')
 
     loss, accuracy = mode_evaluation(valid_batch, model, loss_function)
     val_loss.append(loss)
     val_accuracy.append(accuracy)
-    print(f'{loss:%.6f}, {accuracy}')
+    print(f'{loss:.3f}, {accuracy:.2f}')
 
   loss, accuracy = model_test(test_batch, model, loss_function)
-  print(f'loss = {loss:%.6f}, accuracy = {accuracy}')
+  print(f'loss: {loss:.3f}, accuracy: {accuracy:.2f}')
 
 
 if __name__ == '__main__': training()
