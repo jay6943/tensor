@@ -49,11 +49,11 @@ class Convolution_Neural_Network(torch.nn.Module):
 
 
 def training():
-  train_data = tvs.datasets.MNIST(
+  train_data = tvs.datasets.FashionMNIST(
     root='../data/torch',
     transform=tvs.transforms.ToTensor()
   )
-  test_data = tvs.datasets.MNIST(
+  test_data = tvs.datasets.FashionMNIST(
     root='../data/torch',
     train=False,
     transform=tvs.transforms.ToTensor()
@@ -71,9 +71,9 @@ def training():
   model.to(device)
 
   loss_function = torch.nn.CrossEntropyLoss()
-  optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
+  optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
 
-  for epoch in range(10):
+  for epoch in range(20):
     loss, accuracy = model_train(train_data, model, loss_function, optimizer)
     print(f'[{epoch+1:2d}] {loss:.3f}, {accuracy:.2f}', end=', ')
 
@@ -91,7 +91,7 @@ def model_train(dataloader, model, loss_function, optimizer):
   total_train_batch = len(dataloader)
 
   for images, labels in dataloader:
-    x_train = images.view(-1, 28 * 28).to(device)
+    x_train = images.to(device)
     y_train = labels.to(device)
 
     outputs = model(x_train)
@@ -119,7 +119,7 @@ def mode_evaluation(dataloader, model, loss_function):
     total_val_batch = len(dataloader)
 
     for images, labels in dataloader:
-      x_val = images.view(-1, 28 * 28).to(device)
+      x_val = images.to(device)
       y_val = labels.to(device)
 
       outputs = model(x_val)
@@ -143,7 +143,7 @@ def model_test(dataloader, model, loss_function):
     total_test_batch = len(dataloader)
 
     for images, labels in dataloader:
-      x_test = images.view(-1, 28 * 28).to(device)
+      x_test = images.to(device)
       y_test = labels.to(device)
 
       outputs = model(x_test)

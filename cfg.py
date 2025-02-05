@@ -1,5 +1,5 @@
-works = '../data/torch/'
+path = '../data/torch/'
 
 
 if __name__ == '__main__':
-  print(works)
+  print(path)

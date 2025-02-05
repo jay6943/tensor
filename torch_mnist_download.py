@@ -2,7 +2,7 @@ import torchvision.datasets as tds
 import torchvision.transforms as ttr
 
 
-def number_MIST():
+def number_MNIST():
   tds.MNIST(
     root='../data/torch',
     download=True,
@@ -30,4 +30,18 @@ def fashion_MNIST():
   )
 
 
-if __name__ == '__main__': number_MIST()
+def cifar10():
+  tds.CIFAR10(
+    root='../data/torch/cifar10',
+    download=True,
+    transform=ttr.ToTensor()
+  )
+  tds.CIFAR10(
+    root='../data/torch/cifar10',
+    train=False,
+    download=True,
+    transform=ttr.ToTensor()
+  )
+
+
+if __name__ == '__main__': cifar10()

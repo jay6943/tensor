@@ -1,7 +1,8 @@
-import cfg
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
+
+path = '../data/torch/'
 
 
 class Neural_Network(torch.nn.Module):
@@ -58,12 +59,12 @@ def training():
     for parameter in child.parameters():
       print(name, parameter)
 
-  np.savetxt(cfg.works + 'multi_linear.txt', loss_data)
-  torch.save(model.state_dict(), cfg.works + 'multi_linear_model.pt')
+  np.savetxt(path + 'multi_linear.txt', loss_data)
+  torch.save(model.state_dict(), path + 'multi_linear_model.pt')
 
 
 def testing():
-  model_file = cfg.works + 'multi_linear_model.pt'
+  model_file = path + 'multi_linear_model.pt'
 
   model = Neural_Network()
   model.load_state_dict(torch.load(model_file, weights_only=True))
@@ -80,7 +81,7 @@ def testing():
 
 
 def ploting():
-  data = np.loadtxt(cfg.works + 'multi_linear.txt')
+  data = np.loadtxt(path + 'multi_linear.txt')
 
   plt.figure(figsize=(12, 6))
   plt.plot(data)

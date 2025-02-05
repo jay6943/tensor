@@ -1,7 +1,8 @@
-import cfg
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
+
+path = '../data/torch/'
 
 
 class Neural_Network(torch.nn.Module):
@@ -36,12 +37,12 @@ def training():
     if epoch % 100 == 0:
       print(f'i = {epoch:>4d}, loss = {loss.item():10.2e}')
 
-  np.savetxt(cfg.works + 'linear.txt', loss_data)
-  torch.save(model.state_dict(), cfg.works + 'linear_model.pt')
+  np.savetxt(path + 'linear.txt', loss_data)
+  torch.save(model.state_dict(), path + 'linear_model.pt')
 
 
 def testing():
-  model_file = cfg.works + 'linear_model.pt'
+  model_file = path + 'linear_model.pt'
 
   model = Neural_Network()
   model.load_state_dict(torch.load(model_file, weights_only=True))
@@ -52,7 +53,7 @@ def testing():
 
 
 def ploting():
-  data = np.loadtxt(cfg.works + 'linear.txt')
+  data = np.loadtxt(path + 'linear.txt')
 
   plt.figure(figsize=(12, 6))
   plt.plot(data)
