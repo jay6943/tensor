@@ -2,7 +2,8 @@ import torch
 import torchvision as tvs
 import torch.utils.data as tud
 
-device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f'Device: {device}')
 
 
 class Deep_Learning(torch.nn.Module):
@@ -19,8 +20,8 @@ class Deep_Learning(torch.nn.Module):
     data = self.fc1(data)
     data = self.relu(data)
     data = self.dropout(data)
-    logits = self.fc2(data)
-    return logits
+    data = self.fc2(data)
+    return data
 
 
 def model_train(dataloader, model, loss_function, optimizer):
@@ -123,10 +124,7 @@ def training():
   loss_function = torch.nn.CrossEntropyLoss()
   optimizer = torch.optim.SGD(model.parameters(), lr=1e-2)
 
-  train_loss = []
-  train_accuracy = []
-  val_loss = []
-  val_accuracy = []
+  train_loss, train_accuracy, val_loss, val_accuracy = [], [], [], []
 
   for epoch in range(10):
     loss, accuracy = model_train(train_load, model, loss_function, optimizer)
