@@ -73,5 +73,90 @@ def training():
   loss_function = torch.nn.CrossEntropyLoss()
   optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
 
+  for epoch in range(10):
+    loss, accuracy = model_train(train_data, model, loss_function, optimizer)
+    print(f'[{epoch+1:2d}] {loss:.3f}, {accuracy:.2f}', end=', ')
+
+    loss, accuracy = mode_evaluation(valid_data, model, loss_function)
+    print(f'{loss:.3f}, {accuracy:.2f}')
+
+  loss, accuracy = model_test(test_data, model, loss_function)
+  print(f'loss: {loss:.3f}, accuracy: {accuracy:.2f}')
+
+
+def model_train(dataloader, model, loss_function, optimizer):
+  model.train()
+
+  train_loss_sum = train_correct = train_total = 0
+  total_train_batch = len(dataloader)
+
+  for images, labels in dataloader:
+    x_train = images.view(-1, 28 * 28).to(device)
+    y_train = labels.to(device)
+
+    outputs = model(x_train)
+    loss = loss_function(outputs, y_train)
+
+    optimizer.zero_grad()
+    loss.backward()
+    optimizer.step()
+
+    train_loss_sum += loss.item()
+    train_total += y_train.size(0)
+    train_correct += (torch.argmax(outputs, 1) == y_train).sum().item()
+
+  train_avg_loss = train_loss_sum / total_train_batch
+  train_avg_accuracy = 100 * train_correct / train_total
+
+  return train_avg_loss, train_avg_accuracy
+
+
+def mode_evaluation(dataloader, model, loss_function):
+  model.eval()
+
+  with torch.no_grad():
+    val_loss_sum = val_correct = val_total = 0
+    total_val_batch = len(dataloader)
+
+    for images, labels in dataloader:
+      x_val = images.view(-1, 28 * 28).to(device)
+      y_val = labels.to(device)
+
+      outputs = model(x_val)
+      loss = loss_function(outputs, y_val)
+
+      val_loss_sum += loss.item()
+      val_total += y_val.size(0)
+      val_correct += (torch.argmax(outputs, 1) == y_val).sum().item()
+
+    val_avg_loss = val_loss_sum / total_val_batch
+    val_avg_accuracy = 100 * val_correct / val_total
+
+  return val_avg_loss, val_avg_accuracy
+
+
+def model_test(dataloader, model, loss_function):
+  model.eval()
+
+  with torch.no_grad():
+    test_loss_sum = test_correct = test_total = 0
+    total_test_batch = len(dataloader)
+
+    for images, labels in dataloader:
+      x_test = images.view(-1, 28 * 28).to(device)
+      y_test = labels.to(device)
+
+      outputs = model(x_test)
+      loss = loss_function(outputs, y_test)
+
+      test_loss_sum += loss.item()
+      test_total += y_test.size(0)  # batch size = 32
+      test_correct += (torch.argmax(outputs, 1) == y_test).sum().item()
+
+    test_avg_loss = test_loss_sum / total_test_batch
+    test_avg_accuracy = 100 * test_correct / test_total
+
+    return test_avg_loss, test_avg_accuracy
+
 
 if __name__ == '__main__': training()
