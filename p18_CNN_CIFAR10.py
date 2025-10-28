@@ -1,3 +1,4 @@
+import cfg
 import torch
 import torchvision as tvs
 import torch.utils.data as tud
@@ -64,11 +65,11 @@ class Convolution_Neural_Network(torch.nn.Module):
 
 def training():
   train_data = tvs.datasets.CIFAR10(
-    root='../data/torch/cifar10',
+    root=f'{cfg.path}/cifar10',
     transform=tvs.transforms.ToTensor()
   )
   test_data = tvs.datasets.CIFAR10(
-    root='../data/torch/cifar10',
+    root=f'{cfg.path}/cifar10',
     train=False,
     transform=tvs.transforms.ToTensor()
   )

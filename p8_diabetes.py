@@ -17,7 +17,7 @@ class Logistic_Regression(torch.nn.Module):
 
 
 def training():
-  data = np.loadtxt(cfg.path + 'diabetes.csv', delimiter=',', skiprows=1)
+  data = np.loadtxt(f'{cfg.path}/diabetes.csv', delimiter=',', skiprows=1)
 
   x_train = torch.Tensor(data[:, :-1])
   y_train = torch.Tensor(data[:, [-1]])
@@ -32,13 +32,11 @@ def training():
   for epoch in range(epochs):
     outputs = model(x_train)
     loss = loss_function(outputs, y_train)
-
     loss_data[epoch] = loss.item()
 
     prediction = (outputs > 0.5).float()
-    correct = (prediction == y_train)[:].float()
+    correct = (prediction == y_train).float()
     accuracy = correct.sum() / len(correct)
-
     accuracy_data[epoch] = accuracy
 
     optimizer.zero_grad()
@@ -50,15 +48,15 @@ def training():
       print(f'loss = {loss.item():>7.3f}', end=', ')
       print(f'accuracy = {accuracy:>7.3f}')
 
-  np.savetxt(cfg.path + 'diabetes_loss.txt', loss_data)
-  np.savetxt(cfg.path + 'diabetes_accuracy.txt', accuracy_data)
+  np.savetxt(f'{cfg.path}/diabetes_loss.txt', loss_data)
+  np.savetxt(f'{cfg.path}/diabetes_accuracy.txt', accuracy_data)
 
-  torch.save(model.state_dict(), cfg.path + 'diabetes_model.pt')
+  torch.save(model.state_dict(), f'{cfg.path}/diabetes_model.pt')
 
 
 def ploting():
-  data = [np.loadtxt(cfg.path + 'diabetes_loss.txt'),
-          np.loadtxt(cfg.path + 'diabetes_accuracy.txt')]
+  data = [np.loadtxt(f'{cfg.path}/diabetes_loss.txt'),
+          np.loadtxt(f'{cfg.path}/diabetes_accuracy.txt')]
   text = ['Loss', 'Accuracy']
 
   plt.figure(figsize=(12, 6))
@@ -73,9 +71,8 @@ def ploting():
 
 
 def loss_plot():
-  data = np.loadtxt(cfg.path + 'diabetes_loss.txt')
-
-  plt.figure(figsize=(12, 6))
+  data = np.loadtxt(f'{cfg.path}/diabetes_loss.txt')
+  plt.figure(figsize=(10, 6))
   plt.plot(data)
   plt.xlabel('Epoch')
   plt.ylabel('Loss')

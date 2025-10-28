@@ -1,11 +1,12 @@
+import cfg
 import torch
 import torchvision as tvs
 import torch.utils.data as tud
 import matplotlib.pyplot as plt
 
+path = f'{cfg.path}/cats_and_dogs_filtered'
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f'Device: {device}')
-path = '../data/torch/cats_and_dogs_filtered'
 
 
 class Transfer_Learning(torch.nn.Module):

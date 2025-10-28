@@ -1,7 +1,7 @@
 import cfg
+import dat
 import torch
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 class Deep_Learning(torch.nn.Module):
@@ -40,12 +40,13 @@ def training():
     if epoch % 100 == 0:
       print(f'i = {epoch:>4d}, loss = {loss.item():.4e}')
 
-  np.savetxt(cfg.path + 'deep_learning.txt', loss_data)
-  torch.save(model.state_dict(), cfg.path + 'deep_learning_model.pt')
+  np.savetxt(f'{cfg.path}/deep_learning.txt', loss_data)
+  torch.save(model.state_dict(), f'{cfg.path}/deep_learning_model.pt')
+  return loss_data
 
 
 def testing():
-  model_file = cfg.path + 'deep_learning_model.pt'
+  model_file = f'{cfg.path}/deep_learning_model.pt'
 
   model = Deep_Learning()
   model.load_state_dict(torch.load(model_file, weights_only=True))
@@ -59,15 +60,4 @@ def testing():
   print(logical_value.T)
 
 
-def ploting():
-  data = np.loadtxt(cfg.path + 'multi_linear.txt')
-
-  plt.figure(figsize=(12, 6))
-  plt.plot(data)
-  plt.grid()
-  plt.show()
-
-
-if __name__ == '__main__':
-  training()
-  ploting()
+if __name__ == '__main__': dat.plot(training())

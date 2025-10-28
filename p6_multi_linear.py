@@ -1,8 +1,7 @@
+import cfg
+import dat
 import torch
 import numpy as np
-import matplotlib.pyplot as plt
-
-path = '../data/torch/'
 
 
 class Neural_Network(torch.nn.Module):
@@ -45,9 +44,7 @@ def training():
   for epoch in range(epochs):
     prediction = model(x_train)
     loss = loss_function(prediction, y_train)
-
     loss_data[epoch] = loss.item()
-
     optimizer.zero_grad()
     loss.backward()
     optimizer.step()
@@ -59,36 +56,22 @@ def training():
     for parameter in child.parameters():
       print(name, parameter)
 
-  np.savetxt(path + 'multi_linear.txt', loss_data)
-  torch.save(model.state_dict(), path + 'multi_linear_model.pt')
+  np.savetxt(f'{cfg.path}/multi_linear.txt', loss_data)
+  torch.save(model.state_dict(), f'{cfg.path}/multi_linear_model.pt')
+  return loss_data
 
 
 def testing():
-  model_file = path + 'multi_linear_model.pt'
-
+  model_file = f'{cfg.path}/multi_linear_model.pt'
   model = Neural_Network()
   model.load_state_dict(torch.load(model_file, weights_only=True))
   model.eval()
 
   x_test = torch.Tensor([
-    [5, 5, 0],
-    [2, 3, 1],
-    [-1, 0, -1],
-    [10, 5, 2],
-    [4, -1, -2]])
+    [5, 5, 0], [2, 3, 1], [-1, 0, -1], [10, 5, 2], [4, -1, -2]
+  ])
 
   print(model(x_test))
 
 
-def ploting():
-  data = np.loadtxt(path + 'multi_linear.txt')
-
-  plt.figure(figsize=(12, 6))
-  plt.plot(data)
-  plt.grid()
-  plt.show()
-
-
-if __name__ == '__main__':
-  training()
-  ploting()
+if __name__ == '__main__': dat.plot(training())

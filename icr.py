@@ -1,10 +1,9 @@
+import cfg
 import torch
 import numpy as np
 import torch.utils.data as tud
 import matplotlib.pyplot as plt
 import matplotlib.colors as cls
-
-path = '../data/torch/icr/'
 
 
 class Neural_Network(torch.nn.Module):
@@ -34,8 +33,8 @@ class DataSetting(tud.Dataset):
 
 
 def training():
-  x_data = np.load(path + '1108-164402.npy')
-  y_data = np.loadtxt(path + '1108-164402_bits.txt')
+  x_data = np.load(f'{cfg.path}/1108-164402.npy')
+  y_data = np.loadtxt(f'{cfg.path}/1108-164402_bits.txt')
   x_data = x_data.transpose()
 
   x_train = torch.Tensor(x_data[40001:, :])
@@ -67,20 +66,18 @@ def training():
     for parameter in child.parameters():
       print(name, parameter)
 
-  np.savetxt(path + 'loss.txt', loss_data)
-  torch.save(model.state_dict(), path + 'model.pt')
+  np.savetxt(f'{cfg.path}/loss.txt', loss_data)
+  torch.save(model.state_dict(), f'{cfg.path}/model.pt')
 
 
 def testing():
-  model_file = path + 'model.pt'
-
+  model_file = f'{cfg.path}/model.pt'
   model = Neural_Network()
   model.load_state_dict(torch.load(model_file, weights_only=True))
   model.eval()
 
-  x_data = np.load(path + '1108-164402.npy')
+  x_data = np.load(f'{cfg.path}/1108-164402.npy')
   x_data = x_data.transpose()
-
   x_test = torch.Tensor(x_data[:40002, :])
   y_test = model(x_test).detach().numpy()
 
@@ -88,15 +85,14 @@ def testing():
 
 
 def ploting():
-  data = np.loadtxt(path + 'loss.txt')
-
+  data = np.loadtxt(f'{cfg.path}/loss.txt')
   plt.figure(figsize=(12, 6))
   plt.plot(data)
   plt.grid()
   plt.show()
 
 
-def constellation(fp, data):
+def constellation(filename, data):
   lch = np.max(data)
   plt.figure(figsize=(6 * 2, 6))
   for i in range(2):
@@ -110,10 +106,10 @@ def constellation(fp, data):
     plt.tick_params(bottom=False, labelbottom=False)
     plt.tick_params(left=False, labelleft=False)
     plt.grid(linestyle=':')
-  plt.savefig(fp + '.png')
+  plt.savefig(f'{filename}.png')
   plt.close()
 
 
 if __name__ == '__main__':
   training()
-  constellation(path + 'model.png', testing().T)
+  constellation(f'{cfg.path}/model.png', testing().T)

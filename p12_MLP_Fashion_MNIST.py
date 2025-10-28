@@ -1,3 +1,4 @@
+import cfg
 import torch
 import torchvision as tvs
 import torch.utils.data as tud
@@ -98,11 +99,11 @@ def model_test(dataloader, model, loss_function):
 
 def training():
   train_data = tvs.datasets.FashionMNIST(
-    root='../data/torch',
+    root=f'{cfg.path}',
     transform=tvs.transforms.ToTensor()
   )
   test_data = tvs.datasets.FashionMNIST(
-    root='../data/torch',
+    root=f'{cfg.path}',
     train=False,
     transform=tvs.transforms.ToTensor()
   )

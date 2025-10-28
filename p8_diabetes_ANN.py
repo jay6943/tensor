@@ -25,7 +25,7 @@ class Artificial_Neural_Network(torch.nn.Module):
 
 
 def training():
-  df = pd.read_csv(cfg.path + 'diabetes.csv')
+  df = pd.read_csv(f'{cfg.path}/diabetes.csv')
 
   x = df.drop('Outcome', axis=1).values
   y = df['Outcome'].values
@@ -57,8 +57,8 @@ def training():
     if epoch % 50 == 0:
       print(f'i = {epoch:>4d}, loss = {loss.item():>7.3f}')
 
-  np.savetxt(cfg.path + 'diabetes_loss.txt', loss_data)
-  torch.save(model.state_dict(), cfg.path + 'diabetes_model.pt')
+  np.savetxt(f'{cfg.path}/diabetes_loss.txt', loss_data)
+  torch.save(model.state_dict(), f'{cfg.path}/diabetes_model.pt')
 
   prediction = np.zeros(len(x_test))
   with torch.no_grad():
