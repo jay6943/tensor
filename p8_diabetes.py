@@ -4,6 +4,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+print(f'Device: {device}')
+
+
 class Logistic_Regression(torch.nn.Module):
   def __init__(self):
     super().__init__()
@@ -19,10 +23,10 @@ class Logistic_Regression(torch.nn.Module):
 def training():
   data = np.loadtxt(f'{cfg.path}/diabetes.csv', delimiter=',', skiprows=1)
 
-  x_train = torch.Tensor(data[:, :-1])
-  y_train = torch.Tensor(data[:, [-1]])
+  x_train = torch.Tensor(data[:, :-1]).to(device)
+  y_train = torch.Tensor(data[:, [-1]]).to(device)
 
-  model = Logistic_Regression()
+  model = Logistic_Regression().to(device)
   loss_function = torch.nn.BCELoss()
   optimizer = torch.optim.SGD(model.parameters(), lr=0.001)
 
